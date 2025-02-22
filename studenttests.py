@@ -196,15 +196,28 @@ class TestInitializeZero(unittest.TestCase):
     def test_simple(self):
         t = AssemblyTest(self, "../coverage-src/initialize_zero.s")
 
-        raise NotImplementedError("TODO")
-
         # input the length of the desired array
+        t.input_scalar("a0", 2)
         # TODO
         # call the `initialize_zero` function
+        t.call("initialize_zero")
         # TODO
         # check that the register a0 contains the correct array (hint: look at the check_array_pointer function in framework.py)
+        t.check_array_pointer("a0", [0,0])
         # TODO
         t.execute()
+
+    def test_bad_len(self):
+        t = AssemblyTest(self, "../coverage-src/initialize_zero.s")
+        t.input_scalar("a0", 0)
+        t.call("initialize_zero")
+        t.execute(code=36)
+
+    def test_malloc_fail(self):
+        t = AssemblyTest(self, "../coverage-src/initialize_zero.s")
+        t.input_scalar("a0", 2)
+        t.call("initialize_zero")
+        t.execute(fail="malloc", code=26)
 
     # Add other test cases if neccesary
 

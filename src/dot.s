@@ -44,8 +44,6 @@ loop_start:
     lw t4, 0(t0)
     lw t5, 0(t1)
 
-    ecall
-
     mul t6, t5, t4  # dot product 
 
     add t3, t3, t6 # increment dot product

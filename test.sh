@@ -70,6 +70,9 @@ case "${1}" in
   test_classify)
     "${python_exec}" unittests.py -v TestClassify -- "${@:2}"
     ;;
+  test_initialize_zero)
+    "${python_exec}" studenttests.py -v TestInitializeZero -- "${@:2}"
+    ;;
   test_chain)
     "${python_exec}" unittests.py -v TestChain -- "${@:2}"
     ;;
