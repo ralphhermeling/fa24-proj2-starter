@@ -73,6 +73,15 @@ case "${1}" in
   test_initialize_zero)
     "${python_exec}" studenttests.py -v TestInitializeZero -- "${@:2}"
     ;;
+  test_abs_loss)
+    "${python_exec}" studenttests.py -v TestAbsLoss -- "${@:2}"
+    ;;
+  test_squared_loss)
+    "${python_exec}" studenttests.py -v TestSquaredLoss -- "${@:2}"
+    ;;
+  test_zero_one_loss)
+    "${python_exec}" studenttests.py -v TestZeroOneLoss -- "${@:2}"
+    ;;
   test_chain)
     "${python_exec}" unittests.py -v TestChain -- "${@:2}"
     ;;
