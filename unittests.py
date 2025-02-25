@@ -496,6 +496,16 @@ class TestReadMatrix(unittest.TestCase):
             # fmt: on
         )
 
+    def test_read_4(self):
+        self.doReadMatrix(
+            input_file="../tests/classify-3/m0.bin",
+            result_row=3,
+            result_col=4,
+            # fmt: off
+            result_array= [-1, -2, 3, 4,-5, 6, -7, 8, 9, -10, 11, -12]
+            # fmt: on
+        )
+
     def test_read_fail_fopen(self):
         self.doReadMatrix(
             input_file="../tests/read-matrix-1/input.bin",

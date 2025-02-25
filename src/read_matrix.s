@@ -26,13 +26,14 @@
 # ==============================================================================
 read_matrix:
     # Prologue
-    addi sp, sp, -24
+    addi sp, sp, -28
     sw s0, 0(sp)
     sw s1, 4(sp)
     sw s2, 8(sp)
     sw s3, 12(sp)
     sw s4, 16(sp)
-    sw ra, 20(sp)
+    sw s5, 20(sp)
+    sw ra, 24(sp)
 
     mv s0, a1 # s0 := pointer to an integer that corresponds to the number of rows 
     mv s1, a2 # s1 := pointer to an integer that corresponds to the number of columns 
@@ -60,6 +61,8 @@ read_matrix_dimensions:
 
     lw t0 0(sp)  # corresponds to the number of rows
     lw t1 4(sp)  # corresponds to the number of columns
+    mul s5 t0 t1 # # of elements in the matrix
+    slli s5 s5 2    # # of bytes matrix has
 
     addi sp, sp, 8
 
@@ -80,10 +83,18 @@ read_matrix_start:
     mv s4, s3    # s4 = Current write position in matrix
 
 read_matrix_loop:
+    sub t0, s4, s3 # t0 = bytes read so far
+    sub t0, s5, t0 # t0 = remaining bytes to read
+    beqz t0, read_matrix_finished
+
+    li t1, 16      # Max read size
+    bge t0, t1, use_full_read
+    mv t1, t0
+
+use_full_read:
     mv a0, s2    # File descriptor
     mv a1, s4    # Buffer to write into
-    li a2, 16    # Read 16 bytes per iteration
-
+    mv a2, t1    # Read size = min(remianing bytes, 16)
     jal fread
 
     # Make room on stack to store # bytes read by fread
@@ -97,10 +108,8 @@ read_matrix_loop:
     lw t0, 0(sp)
     addi sp, sp, 4
 
-    li t1, 16
-    blt t0, t1, read_matrix_finished
-
     add s4, s4, t0
+
     j read_matrix_loop
 
 check_ferror: 
@@ -122,8 +131,9 @@ finish:
     lw s2, 8(sp)
     lw s3, 12(sp)
     lw s4, 16(sp)
-    lw ra, 20(sp)
-    addi sp, sp,24 
+    lw s5, 20(sp)
+    lw ra, 24(sp)
+    addi sp, sp,28 
 
     jr ra
 
