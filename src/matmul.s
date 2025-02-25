@@ -34,12 +34,13 @@ matmul:
     bne a2, a4, dimensions_dont_match
 
     # Prologue
-    addi sp, sp, -16
+    addi sp, sp, -20
 
     sw s0, 0(sp)
     sw s1, 4(sp)
     sw s2, 8(sp)
     sw s3, 12(sp)
+    sw ra, 16(sp)
 
     mv s0, a2      #s0 corresponds to the number of columns of m0
     mul s1, a1, a2 #s1 corresponds to the number of elements in m0 := a1 * a2
@@ -111,8 +112,9 @@ outer_loop_end:
     lw s1, 4(sp)
     lw s2, 8(sp)
     lw s3, 12(sp)
+    lw ra, 16(sp)
 
-    addi sp, sp, 16
+    addi sp, sp, 20
 
     jr ra
 

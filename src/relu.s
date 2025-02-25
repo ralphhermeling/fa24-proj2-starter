@@ -17,10 +17,11 @@ relu:
     blt a1, t0, throw_exception
 
     # Prologue
-    addi sp, sp, -12 # We are calling the abs function so save a0 and a1 on the stack
+    addi sp, sp, -16 # We are calling the abs function so save a0 and a1 on the stack
     sw s0, 0(sp)
     sw s1, 4(sp)
     sw s2, 8(sp)
+    sw ra, 12(sp)
 
     li s0, 0  #s0 corresponds to the index
     mv s1 a1  #s1 corresponds to the number of elements in the array
@@ -41,7 +42,8 @@ loop_end:
     lw s0, 0(sp)
     lw s1, 4(sp) # Restore pointer to array and # elements of array to a0 and a1, respectively
     lw s2, 8(sp)
-    addi sp, sp, 12 
+    lw ra, 12(sp)
+    addi sp, sp, 16 
 
     jr ra
 

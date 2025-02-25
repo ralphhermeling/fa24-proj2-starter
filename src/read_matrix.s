@@ -121,8 +121,8 @@ finish:
     lw s1, 4(sp)
     lw s2, 8(sp)
     lw s3, 12(sp)
-    lw ra, 16(sp)
-    lw s4, 20(sp)
+    lw s4, 16(sp)
+    lw ra, 20(sp)
     addi sp, sp,24 
 
     jr ra
